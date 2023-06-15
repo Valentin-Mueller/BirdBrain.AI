@@ -1,0 +1,18 @@
+version: '3.10'
+services:
+  frontend:
+    build:
+      context: ./frontend/
+      dockerfile: ./Dockerfile
+    ports:
+      - 3000:3000
+    container_name: frontend
+    stdin_open: true
+    # command: node App.js
+
+  backend:
+    build: ./backend
+    ports:
+      - 8000:80
+    container_name: backend
+    # command: /start-reload.sh

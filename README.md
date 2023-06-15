@@ -2,12 +2,62 @@
 
 Project Repository for the exam in Advanced Machine Learning at DHBW Mannheim.
 
-To run the server, make sure you have `fastapi` and `uvicorn` installed in your environment and you are in the folder [app](/app/). Then, run the following command:
+## Running the Project with Docker
+
+To build and run the Docker containers, run the following command in the project's root directory:
+
+```
+docker-compose up -d --build
+```
+
+To run without building (when already built) use the command without the `--build`-argument:
+
+```
+docker-compose up -d
+```
+
+To stop the containers from running, use the following command:
+
+```
+docker-compose down
+```
+
+If additionally the removal of created volumes is desired, add the argument `-v`:
+
+```
+docker-compose down -v
+```
+
+## Running the Project without Docker (not recommended)
+
+To run the backend server without Docker, make sure you are using `python 3.10` have `fastapi` and `uvicorn` installed in your environment and you are in the folder [backend](backend/). To install those and further requirements, use the following command first:
+
+```
+pip install -r requirements.txt
+```
+
+Then, run the following command:
 
 ```
 uvicorn main:app --reload
 ```
 
-This allows you to access the app at [http://localhost:8000/](http://localhost:8000/).
+Same goes for the frontend server. Provided `node.js` is installed, you can execute the following command inside the [frontend](frontend/) directory:
+
+```
+npm install
+```
+
+When the initial installation is done, run the server as shown below:
+
+```
+npm start
+```
+
+## Accessing the Application
+
+The Frontend is running at [http://localhost:3000/](http://localhost:3000/), which is where the web-application is accessed for normal users.
+
+You can access the backend API directly at [http://localhost:8000/](http://localhost:8000/).
 
 FastAPI automatically generates a API documentation with swagger, which can not only be viewed at [http://localhost:8000/docs](http://localhost:8000/docs), but also tested or tried out there.
