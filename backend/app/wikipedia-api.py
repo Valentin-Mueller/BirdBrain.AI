@@ -7,14 +7,6 @@ import pandas as pd
 import wikipedia
 from googlesearch import search
 
-# requirements -> for googlesearch: python -m pip install google
-
-df = pd.read_csv('C:/Users/I538992/Desktop/AML Projekt/birds.csv')
-bird_names = df.labels.unique()
-bird_name = random.choice(bird_names)  # get a random bird name
-bird_name = bird_name.lower()  # make bird name lowercase
-print(bird_name)
-
 wikipedia.set_lang("en")  # set language of wikipedia article
 
 # check if google library is installed
@@ -44,19 +36,15 @@ def google_search(bird):
     return result_bird_wiki
 
 
-def bird_summary(bird):
+def bird_summary_wikipedia(bird):
     bird_wikipedia_page = google_search(bird)
     #
     try:
         bird_summary = wikipedia.summary(bird_wikipedia_page,
                                          auto_suggest=False)
     except wikipedia.WikipediaException as bird_summary:
-        print(bird_summary)
+        bird_summary = ''
     return bird_summary
-
-
-bird__summary = bird_summary(bird_name)
-print(bird__summary)
 
 
 def bird_wikipedia_page(bird):
@@ -68,7 +56,3 @@ def bird_wikipedia_page(bird):
     except wikipedia.WikipediaException as bird_page_content:
         print(bird_page_content)
     return bird_page_content
-
-
-bird_page = bird_wikipedia_page(bird_name)
-bird_page
