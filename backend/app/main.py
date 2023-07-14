@@ -1,13 +1,11 @@
 import json
 import os
-import re
 
-import wikipedia
-from app.wikipedia_api import *
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from googlesearch import search
-from pydantic import BaseModel
+import tensorflow as tf
+
+from app.wikipedia_api import bird_summary_wikipedia, bird_wikipedia_page  # pylint: disable=E0401
 
 app = FastAPI()
 UPLOAD_DIR = "/upload_directory"
@@ -30,7 +28,12 @@ async def root():
 
 @app.get("/test/")
 async def test():
-    return {"message": "API was called successfully."}
+    path = os.path.dirname(__file__)
+
+    print(tf.__version__)
+
+    tf.keras.models.load_model(os.path.join(path, './models/bird_brain_model.h5'))
+    return {"message": "API was called and model loaded successfully."}
 
 
 @app.post("/api/photo")
@@ -51,10 +54,7 @@ async def upload_photo(photo: UploadFile = File(...)):
     #predicted = prediction()
     # results = predict_one_path(file_path)
 
-    return {
-        "subtitle": json.dumps(results),
-        "prediction": json.dumps(prediction)
-    }
+    return {"subtitle": json.dumps(results), "prediction": json.dumps(prediction)}
 
 
 @app.post("/{bird_name}/summary/")
