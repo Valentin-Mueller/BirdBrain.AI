@@ -1,22 +1,22 @@
-# import libraries
-import random
+"""Module containing functions related to Wikipedia and information retrieval."""
 import re
 
-import pandas as pd
 # wikipedia libary
 import wikipedia
 from googlesearch import search
 
 wikipedia.set_lang("en")  # set language of wikipedia article
 
-# check if google library is installed
-try:
-    from googlesearch import search
-except ImportError:
-    print("No module named 'google' found")
 
+def google_search(bird: str) -> str:
+    """Conduct a Google search to find a better match for Wikipedia pages.
 
-def google_search(bird):
+    Args:
+        bird (str): Name of the bird to look up information for.
+
+    Returns:
+        str: The bird name as used in Wikipedia, or as input if not found.
+    """
     query = f"'{bird}' site:wikipedia.org"
     for j in search(query, num=1, stop=1, pause=1):
         bird_wiki_page = j
@@ -28,31 +28,33 @@ def google_search(bird):
     if match:
         result_bird_wiki = bird_wiki_page[match.end():]
     else:
-        result_bird_wiki = ''
-
-    if result_bird_wiki == '':
         result_bird_wiki = bird
-    print(bird_wiki_page)
+
     return result_bird_wiki
 
 
-def bird_summary_wikipedia(bird):
-    bird_wikipedia_page = google_search(bird)
-    #
-    try:
-        bird_summary = wikipedia.summary(bird_wikipedia_page,
-                                         auto_suggest=False)
-    except wikipedia.WikipediaException as bird_summary:
-        bird_summary = ''
-    return bird_summary
+def get_bird_information(bird_name: str, detailed: bool = False) -> str:
+    """Retrieve information about a species of bird from the English Wikipedia.
 
+    Calls APIs of Google as well as Wikipedia.
 
-def bird_wikipedia_page(bird):
-    bird_wikipedia_page_google = google_search(bird)
+    Args:
+        bird_name (str): Name of the bird to look up information for.
+        detailed (bool, optional): Whether to return the full page or just the summary. Defaults to False.
+
+    Returns:
+        str: Information about the bird.
+    """
+
+    bird_wiki_page = google_search(bird_name)
+
     try:
-        bird_wikipedia_page = wikipedia.page(bird_wikipedia_page_google,
-                                             auto_suggest=False)
-        bird_page_content = bird_wikipedia_page.content
-    except wikipedia.WikipediaException as bird_page_content:
-        print(bird_page_content)
-    return bird_page_content
+        if detailed:
+            wiki_page = wikipedia.page(bird_wiki_page, auto_suggest=False)
+            information = wiki_page.content
+        else:
+            information = wikipedia.summary(bird_wiki_page, auto_suggest=False)
+    except wikipedia.WikipediaException as e:
+        return str(e)
+
+    return information
