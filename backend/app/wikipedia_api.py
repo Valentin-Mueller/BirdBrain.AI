@@ -1,7 +1,7 @@
 """Module containing functions related to Wikipedia and information retrieval."""
 import re
 
-# wikipedia libary
+from urllib.error import HTTPError
 import wikipedia
 from googlesearch import search
 
@@ -18,8 +18,17 @@ def google_search(bird: str) -> str:
         str: The bird name as used in Wikipedia, or as input if not found.
     """
     query = f"'{bird}' site:wikipedia.org"
-    for j in search(query, num=1, stop=1, pause=1):
-        bird_wiki_page = j
+
+    bird_wiki_page = None
+
+    try:
+        for j in search(query, num=1, stop=1, pause=1):
+            bird_wiki_page = j
+    except HTTPError:
+        return bird
+
+    if bird_wiki_page is None:
+        return bird
 
     spl_word = "/wiki/"
 
@@ -55,6 +64,7 @@ def get_bird_information(bird_name: str, detailed: bool = False) -> str:
         else:
             information = wikipedia.summary(bird_wiki_page, auto_suggest=False)
     except wikipedia.WikipediaException as e:
-        return str(e)
+        return (f'{str(e)} \n\nThis might be due to too many requests being sent in too little time' /
+                ', so trying again later might lead to better results.')
 
     return information

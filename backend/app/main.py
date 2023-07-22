@@ -4,7 +4,7 @@ import shutil
 import numpy as np
 from PIL import Image
 
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, Form, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
 import tensorflow as tf
@@ -25,15 +25,6 @@ app.add_middleware(
 )
 
 model = tf.keras.models.load_model(os.path.join(os.path.dirname(__file__), './models/bird_brain_model.h5'))
-
-# @app.get('/', response_model=None)
-# async def root() -> dict[str, str]:
-#     """Basic API root endpoint.
-
-#     Returns:
-#         dict[str, str]: JSON with dummy message.
-#     """
-#     return {'message': 'Hello World'}
 
 
 @app.get('/test-api/', response_model=None)
@@ -75,28 +66,15 @@ async def classifiy_bird(image: UploadFile = File()) -> dict[str, str | float]:
 
     predicted_class_index = np.argmax(predictions)
 
-    bird_name = bird_mapping[predicted_class_index]
+    bird_name = bird_mapping[predicted_class_index].title()
 
     confidence = predictions[predicted_class_index]
 
     return {'bird_name': bird_name, 'confidence': float(confidence)}
 
 
-# @app.post('/{bird_name}/summary/')
-# async def bird_summary(bird_name):
-#     bird_wiki_summary = bird_summary_wikipedia(bird_name)
-#     bird_wiki_summary = str(bird_wiki_summary)
-#     return {'message': bird_wiki_summary}
-
-# @app.post('/{bird_name}/page/')
-# async def bird_page(bird_name):
-#     bird_wiki_page = bird_wikipedia_page(bird_name)
-#     bird_wiki_page = str(bird_wiki_page)
-#     return {'message': bird_wiki_page}
-
-
 @app.post('/bird-information', response_model=None)
-async def bird_information(bird_name: str, detailed: bool = False) -> dict[str, str]:
+async def bird_information(bird_name: str = Form(), detailed: bool = Form()) -> dict[str, str]:
     """API endpoint to retrieve information about a species of bird.
 
     Args:
