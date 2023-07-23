@@ -77,4 +77,6 @@ FastAPI automatically generates a API documentation with swagger, which can not 
 ## Training Notebook and Model
 
 You can access the training notebook directly at [https://colab.research.google.com/drive/13Cu-PLkuDb5e5b24IJsrPhc9IzwBfZit?usp=sharing).
+You can access the data set directly at [https://www.kaggle.com/datasets/gpiosenka/100-bird-species).
+
 You can access and download the model directly from [https://drive.google.com/drive/folders/1hnJDG6kKPq4EjY-3V5b0H-XjmmiKk7Kg?usp=sharing).
