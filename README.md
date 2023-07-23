@@ -72,4 +72,6 @@ The frontend is running at [http://localhost:3000/](http://localhost:3000/), whi
 
 You can access the backend API directly at [http://localhost:8000/](http://localhost:8000/).
 
+## Training Notebook and Model
+
 FastAPI automatically generates a API documentation with swagger, which can not only be viewed at [http://localhost:8000/docs](http://localhost:8000/docs), but also tested or tried out there.
