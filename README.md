@@ -80,3 +80,4 @@ You can access the training notebook directly at [https://colab.research.google.
 You can access the data set directly at [https://www.kaggle.com/datasets/gpiosenka/100-bird-species).
 
 You can access and download the model directly from [https://drive.google.com/drive/folders/1hnJDG6kKPq4EjY-3V5b0H-XjmmiKk7Kg?usp=sharing).
+To load the model into the training notebook, it is recommended that you create link to the model in your personal One Drive.
