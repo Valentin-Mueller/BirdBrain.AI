@@ -72,6 +72,9 @@ The frontend is running at [http://localhost:3000/](http://localhost:3000/), whi
 
 You can access the backend API directly at [http://localhost:8000/](http://localhost:8000/).
 
+FastAPI automatically generates a API documentation with swagger, which can not only be viewed at [http://localhost:8000/docs](http://localhost:8000/docs), but also tested or tried out there.
+
 ## Training Notebook and Model
 
-FastAPI automatically generates a API documentation with swagger, which can not only be viewed at [http://localhost:8000/docs](http://localhost:8000/docs), but also tested or tried out there.
+You can access the training notebook directly at [https://colab.research.google.com/drive/13Cu-PLkuDb5e5b24IJsrPhc9IzwBfZit?usp=sharing).
+You can access and download the model directly from [https://drive.google.com/drive/folders/1hnJDG6kKPq4EjY-3V5b0H-XjmmiKk7Kg?usp=sharing).
